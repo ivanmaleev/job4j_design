@@ -1,6 +1,6 @@
 package ru.job4j.generics;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -8,7 +8,7 @@ import java.util.Iterator;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class SimpleArrayTest extends TestCase {
+public class SimpleArrayTest {
 
     @Test
     public void testAdd() {
@@ -18,14 +18,12 @@ public class SimpleArrayTest extends TestCase {
         in.add(4);
         in.add(3);
         in.add(2);
-        in.add(1);
 
         Iterator<Integer> iterator = in.iterator();
         assertThat(iterator.next(), is(5));
         assertThat(iterator.next(), is(4));
         assertThat(iterator.next(), is(3));
         assertThat(iterator.next(), is(2));
-        assertThat(iterator.next(), is(1));
 
     }
 
@@ -105,6 +103,6 @@ public class SimpleArrayTest extends TestCase {
         iterator.next();
         iterator.next();
         iterator.next();
-        assertFalse(iterator.hasNext());
+        Assert.assertFalse(iterator.hasNext());
     }
 }
