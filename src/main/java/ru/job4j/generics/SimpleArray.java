@@ -20,19 +20,19 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void set(int index, T model) {
-        int i = Objects.checkIndex(index, data.length);
+        int i = Objects.checkIndex(index, size);
         data[i] = model;
     }
 
     public void remove(int index) {
-        int i = Objects.checkIndex(index, data.length);
+        int i = Objects.checkIndex(index, size);
         size--;
-        System.arraycopy(data, i + 1, data, i, size - i);
+        System.arraycopy(data, i + 1, data, i, data.length - index - 1);
         data[size] = null;
     }
 
     public T get(int index) {
-        int i = Objects.checkIndex(index, data.length);
+        int i = Objects.checkIndex(index, size);
         return (T) data[i];
     }
 
@@ -44,12 +44,12 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return point < data.length && data[point] != null;
+                return point < size;
             }
 
             @Override
             public T next() {
-                return (T) data[point++];
+                return hasNext() ? (T) data[point++] : null;
             }
         };
         return it;
