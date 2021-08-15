@@ -1,5 +1,6 @@
 package ru.job4j.generics;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -73,12 +74,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
         arr.add(9); //5, 7, 2, 10, 11, 9
 
-//        System.out.println(arr.get(0));
-//        System.out.println(arr.get(1));
-//        System.out.println(arr.get(2));
-//        System.out.println(arr.get(3));
-//        System.out.println(arr.get(4));
-//        System.out.println(arr.get(5));
+        ArrayList arrayList = new ArrayList<>();
 
         for (Integer ints : arr) {
             System.out.println(ints);
