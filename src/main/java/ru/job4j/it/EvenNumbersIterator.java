@@ -21,7 +21,7 @@ public class EvenNumbersIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        if (!hasNext() || point == -1) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
         return data[point++];
