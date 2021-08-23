@@ -1,33 +1,28 @@
 package ru.job4j.question;
 
-import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Analize {
 
     public static Info diff(Set<User> previous, Set<User> current) {
 
-        Set<User> copyCurrent = new HashSet<>(current);
-        copyCurrent.removeAll(previous);
-        int added = copyCurrent.size();
-
-        Set<User> copyPrevious = new HashSet<>(previous);
-        copyPrevious.removeAll(current);
-        int deleted = copyPrevious.size();
-
-        copyCurrent = new HashSet<>(current);
-        copyCurrent.retainAll(previous);
+        Map<Integer, User> mapCurrent = current.stream()
+                .collect(Collectors.toMap(User::getId, user -> user));
+        int deleted = 0;
         int changed = 0;
-        for (User userCur : copyCurrent) {
-            for (User userPrev : previous) {
-                if (userCur.equals(userPrev) && !userCur.getName().equals(userPrev.getName())) {
-                    changed++;
-                }
+        for (User user : previous) {
+            User curUser = mapCurrent.get(user.getId());
+            if (curUser == null) {
+                deleted++;
+            } else if (!user.getName().equals(curUser.getName())) {
+                changed++;
             }
+            mapCurrent.remove(user.getId());
         }
-        Info info = new Info(added, changed, deleted);
-
-        return info;
+        int added = mapCurrent.size();
+        return new Info(added, changed, deleted);
     }
 
 }
