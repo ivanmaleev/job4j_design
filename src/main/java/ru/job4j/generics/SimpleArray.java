@@ -1,13 +1,12 @@
 package ru.job4j.generics;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class SimpleArray<T> implements Iterable<T> {
 
-    private Object[] data;
+    final private Object[] data;
     private int size = 0;
 
     public SimpleArray(int length) {
@@ -39,7 +38,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        Iterator<T> it = new Iterator<T>() {
+        return new Iterator<>() {
 
             private int point = 0;
 
@@ -57,7 +56,6 @@ public class SimpleArray<T> implements Iterable<T> {
                 return (T) data[point++];
             }
         };
-        return it;
     }
 
     public static void main(String[] args) {
@@ -78,8 +76,6 @@ public class SimpleArray<T> implements Iterable<T> {
         arr.remove(3); //5, 7, 2, 10, 11
 
         arr.add(9); //5, 7, 2, 10, 11, 9
-
-        ArrayList arrayList = new ArrayList<>();
 
         for (Integer ints : arr) {
             System.out.println(ints);
