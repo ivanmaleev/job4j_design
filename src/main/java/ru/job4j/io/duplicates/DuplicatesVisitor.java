@@ -9,18 +9,13 @@ import java.util.*;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
 
-    private Map<Path, FileProperty> files = new HashMap<>();
+    private final Map<Path, FileProperty> files = new HashMap<>();
 
     public Map<Path, FileProperty> getDuplicates() {
         Map<Path, FileProperty> duplicates = new HashMap<>();
-        for (Map.Entry<Path, FileProperty> fileI : files.entrySet()) {
-            for (Map.Entry<Path, FileProperty> fileJ : files.entrySet()) {
-                if (fileI.getKey().equals(fileJ.getKey())) {
-                    continue;
-                }
-                if (fileI.getValue().getName().equals(fileJ.getValue().getName())) {
-                    duplicates.put(fileJ.getKey(), fileJ.getValue());
-                }
+        for (var file : files.entrySet()) {
+            if ((Collections.frequency(files.values(), file.getValue())) > 1) {
+                duplicates.put(file.getKey(), file.getValue());
             }
         }
         return duplicates;
