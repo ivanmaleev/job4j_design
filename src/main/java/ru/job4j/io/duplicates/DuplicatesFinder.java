@@ -12,9 +12,14 @@ public class DuplicatesFinder {
             throw new IllegalArgumentException();
         }
         ArgsName argsName = ArgsName.of(args);
-        String path = argsName.get("path");
-        final DuplicatesVisitor duplicatesVisitor = new DuplicatesVisitor();
-        Files.walkFileTree(Path.of(path), duplicatesVisitor);
+        String pathStr = argsName.get("path");
+        Path path = Path.of(pathStr);
+        if (!Files.isDirectory(path)) {
+            System.out.println(pathStr + " is not a directoty");
+            return;
+        }
+        DuplicatesVisitor duplicatesVisitor = new DuplicatesVisitor();
+        Files.walkFileTree(path, duplicatesVisitor);
         for (var file : duplicatesVisitor.getDuplicates().entrySet()) {
             System.out.println(file.getKey() + " " + file.getValue().getSize());
         }
