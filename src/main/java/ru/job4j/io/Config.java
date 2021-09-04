@@ -19,7 +19,6 @@ public class Config {
         if (!isValid()) {
             throw new IllegalArgumentException();
         }
-        StringJoiner out = new StringJoiner(System.lineSeparator());
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             Predicate<String> predicateComment = str -> !str.startsWith("#");
             Predicate<String> predicateEmpty = str -> !(str.length() == 0);
@@ -33,7 +32,7 @@ public class Config {
     }
 
     private boolean isValid() {
-        List<String> errors = new ArrayList<>();
+        List<String> errors;
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             Predicate<String> searchErrors = (str -> !(str.length() == 0)
                                             && !str.startsWith("#")
