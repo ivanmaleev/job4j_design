@@ -15,8 +15,7 @@ public class DuplicatesFinder {
         String pathStr = argsName.get("path");
         Path path = Path.of(pathStr);
         if (!Files.isDirectory(path)) {
-            System.out.println(pathStr + " is not a directoty");
-            return;
+            throw new IllegalArgumentException("is not a directory");
         }
         DuplicatesVisitor duplicatesVisitor = new DuplicatesVisitor();
         Files.walkFileTree(path, duplicatesVisitor);
