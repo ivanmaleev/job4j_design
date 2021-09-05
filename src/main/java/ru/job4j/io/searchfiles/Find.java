@@ -72,8 +72,7 @@ class SearchFiles extends SimpleFileVisitor<Path> {
         } else if (type.equals("regex")) {
             Pattern p = Pattern.compile(n);
             Matcher matcher = p.matcher(fileName);
-            boolean matches = matcher.matches();
-            if (matches) {
+            if (matcher.matches()) {
                 files.add(file);
             }
         } else if (fileName.contains(n)) {

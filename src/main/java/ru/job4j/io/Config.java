@@ -10,60 +10,49 @@ public class Config {
 
     private final String path;
     private Map<String, String> values = new HashMap<>();
+    private List<String> lines;
 
     public Config(final String path) {
         this.path = path;
+        try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
+            lines = read.lines()
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void load() {
         if (!isValid()) {
             throw new IllegalArgumentException();
         }
-        try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
-            Predicate<String> predicateComment = str -> !str.startsWith("#");
-            Predicate<String> predicateEmpty = str -> !(str.length() == 0);
-            Predicate<String> predicate = predicateEmpty.and(predicateComment);
-            values = read.lines()
-                    .filter(predicate)
-                    .collect(Collectors.toMap(str -> str.split("=")[0], str -> str.split("=")[1]));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Predicate<String> predicateComment = str -> !str.startsWith("#");
+        Predicate<String> predicateEmpty = str -> !(str.length() == 0);
+        Predicate<String> predicate = predicateEmpty.and(predicateComment);
+        values = collectFiles(predicate).stream().collect(Collectors.toMap(str -> str.split("=")[0], str -> str.split("=")[1]));
     }
 
     private boolean isValid() {
-        List<String> errors;
-        try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
-            Predicate<String> searchErrors = (str -> !(str.length() == 0)
-                                            && !str.startsWith("#")
-                                            && (str.split("=").length != 2));
-
-            errors = read.lines()
-                    .filter(searchErrors)
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return errors.size() == 0;
+        Predicate<String> searchErrors = (str -> !(str.length() == 0)
+                && !str.startsWith("#")
+                && (str.split("=").length != 2));
+        return collectFiles(searchErrors).size() == 0;
     }
 
     public String value(String key) {
         return values.get(key);
     }
 
-    public Map<String, String> getValues() {
-        return values;
+    public List<String> collectFiles(Predicate<String> filter) {
+        return lines.stream()
+                .filter(filter)
+                .collect(Collectors.toList());
     }
 
     @Override
     public String toString() {
         StringJoiner out = new StringJoiner(System.lineSeparator());
-        try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
-            read.lines().forEach(out::add);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        lines.stream().forEach(out::add);
         return out.toString();
     }
 
