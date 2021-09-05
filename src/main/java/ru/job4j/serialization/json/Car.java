@@ -14,6 +14,10 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.*;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONPropertyIgnore;
+
 @XmlRootElement(name = "car")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Car {
@@ -40,6 +44,27 @@ public class Car {
         this.engine = engine;
     }
 
+    public String getProduser() {
+        return produser;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String[] getDrivers() {
+        return drivers;
+    }
+
+    public int getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    @JSONPropertyIgnore
+    public Engine getEngine() {
+        return engine;
+    }
+
     @Override
     public String toString() {
         return "Car{"
@@ -51,26 +76,15 @@ public class Car {
                 + '}';
     }
 
-    @XmlRootElement(name = "engine")
-    @XmlAccessorType(XmlAccessType.FIELD)
-    public static class Engine {
-        private int hP;
-
-        public Engine() {
-        }
-
-        public Engine(int hP) {
-            this.hP = hP;
-        }
-    }
 
     public static void main(String[] args) throws JAXBException {
-        String[] drivers = new String[3];
-        drivers[0] = "Ivan";
-        drivers[1] = "Anton";
-        drivers[2] = "Valeriy";
-        Car car = new Car("LADA", "Vesta", drivers, 180, new Car.Engine(120));
+//        String[] drivers = new String[3];
+//        drivers[0] = "Ivan";
+//        drivers[1] = "Anton";
+//        drivers[2] = "Valeriy";
+//        Car car = new Car("LADA", "Vesta", drivers, 180, new Car.Engine(120));
 
+        //json Gson
 //        final Gson gson = new GsonBuilder().create();
 //        String carJson = gson.toJson(car);
 //        System.out.println(carJson);
@@ -78,22 +92,43 @@ public class Car {
 //        Car carFromJson = gson.fromJson(carJson, Car.class);
 //        System.out.println(carFromJson);
 
-        JAXBContext context = JAXBContext.newInstance(Car.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        String xml = "";
-        try (StringWriter writer = new StringWriter()) {
-            marshaller.marshal(car, writer);
-            xml = writer.getBuffer().toString();
-            System.out.println(xml);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        try (StringReader reader = new StringReader(xml)) {
-            Car result = (Car) unmarshaller.unmarshal(reader);
-            System.out.println(result);
-        }
+        //xml
+//        JAXBContext context = JAXBContext.newInstance(Car.class);
+//        Marshaller marshaller = context.createMarshaller();
+//        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+//        String xml = "";
+//        try (StringWriter writer = new StringWriter()) {
+//            marshaller.marshal(car, writer);
+//            xml = writer.getBuffer().toString();
+//            System.out.println(xml);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Unmarshaller unmarshaller = context.createUnmarshaller();
+//        try (StringReader reader = new StringReader(xml)) {
+//            Car result = (Car) unmarshaller.unmarshal(reader);
+//            System.out.println(result);
+//        }
 
+        //org.json
+        String[] drivers = new String[3];
+        drivers[0] = "Ivan";
+        drivers[1] = "Anton";
+        drivers[2] = "Valeriy";
+        JSONArray driversJson = new JSONArray(drivers);
+        Engine engine = new Engine(120);
+        Car car = new Car("LADA", "Vesta", drivers, 180, new Engine(120));
+        engine.setCar(car);
+        JSONObject carJson = new JSONObject(car);
+        JSONObject engineJson = new JSONObject(engine);
+        engineJson.put("hP", engine.gethP());
+        engineJson.put("car", engineJson);
+        carJson.put("produser", car.getProduser());
+        carJson.put("model", car.getModel());
+        carJson.put("drivers", driversJson);
+        carJson.put("maxSpeed", car.getMaxSpeed());
+        carJson.put("engine", engineJson);
+
+        System.out.println(carJson);
     }
 }
