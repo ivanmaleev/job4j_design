@@ -6,22 +6,13 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class CSVReader {
-    public static boolean readCSV(String inPathStr, String delimiter, String outPathStr, String filter) throws IOException {
-        Path pathIn = Path.of(inPathStr);
-        if (Files.isDirectory(pathIn)) {
-            System.out.println(inPathStr + " is not a file");
-            return false;
-        }
-        boolean stdout = false;
-        if (outPathStr.equals("stdout")) {
-            stdout = true;
-        } else {
-            Path pathOut = Path.of(outPathStr);
-            if (Files.isDirectory(pathOut)) {
-                System.out.println(outPathStr + " is not a file");
-                return false;
-            }
-        }
+
+    private Path pathIn;
+    private boolean stdout = false;
+    private Path pathOut;
+
+    public boolean readCSV(String inPathStr, String delimiter, String outPathStr, String filter) throws IOException {
+        validateParameters(inPathStr, outPathStr);
         Set<String> filters = new HashSet<>(Arrays.asList(filter.split(",")));
         boolean firstLine = true;
         List<Integer> columns = new ArrayList<>();
@@ -46,16 +37,37 @@ public class CSVReader {
                 for (String columnStr : splitLine) {
                     if (columns.contains(columnNum)) {
                         if (stdout) {
-                            System.out.println(columnStr);
+                            System.out.print(columnStr + " ");
                         } else {
-                            out.println(columnStr);
+                            out.print(columnStr + " ");
                         }
                     }
                     columnNum++;
                 }
+                if (stdout) {
+                    System.out.print(System.lineSeparator());
+                } else {
+                    out.print(System.lineSeparator());
+                }
             }
         }
         return true;
+    }
+
+    private void validateParameters(String inPathStr, String outPathStr) {
+        pathIn = Path.of(inPathStr);
+        if (Files.isDirectory(pathIn)) {
+            throw new IllegalArgumentException(inPathStr + " is not a file");
+        }
+        stdout = false;
+        if (outPathStr.equals("stdout")) {
+            stdout = true;
+        } else {
+            pathOut = Path.of(outPathStr);
+            if (Files.isDirectory(pathOut)) {
+                throw new IllegalArgumentException(outPathStr + " is not a file");
+            }
+        }
     }
 
     public static void main(String[] args) throws IOException {
@@ -67,6 +79,8 @@ public class CSVReader {
         String delimiter = argsName.get("delimiter");
         String outPathStr = argsName.get("out");
         String filter = argsName.get("filter");
-        readCSV(inPathStr, delimiter, outPathStr, filter);
+        CSVReader csvReader = new CSVReader();
+        csvReader.validateParameters(inPathStr, outPathStr);
+        csvReader.readCSV(inPathStr, delimiter, outPathStr, filter);
     }
 }
