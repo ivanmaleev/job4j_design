@@ -25,34 +25,49 @@ public class CSVReader {
                 line = scanner.nextLine();
                 splitLine = line.split(delimiter);
                 if (firstLine) {
-                    for (String columnStr : splitLine) {
-                        if (filters.contains(columnStr)) {
-                            columns.add(columnNum);
-                        }
-                        columnNum++;
-                    }
+                    columns = fillColumns(splitLine, filters, columnNum);
                     firstLine = false;
                     continue;
                 }
                 for (String columnStr : splitLine) {
                     if (columns.contains(columnNum)) {
-                        if (stdout) {
-                            System.out.print(columnStr + " ");
-                        } else {
-                            out.print(columnStr + " ");
-                        }
+                        printOut(stdout, columnStr, out, false);
                     }
                     columnNum++;
                 }
-                if (stdout) {
-                    System.out.print(System.lineSeparator());
-                } else {
-                    out.print(System.lineSeparator());
-                }
+                printOut(stdout, "", out, true);
             }
         }
         return true;
     }
+
+    private void printOut(boolean stdout, String columnStr, PrintWriter out, boolean emptyLine) {
+        if (emptyLine) {
+            if (stdout) {
+                System.out.print(columnStr + " ");
+            } else {
+                out.print(columnStr + " ");
+            }
+        } else {
+            if (stdout) {
+                System.out.print(System.lineSeparator());
+            } else {
+                out.print(System.lineSeparator());
+            }
+        }
+    }
+
+    private List<Integer> fillColumns(String[] splitLine, Set<String> filters, int columnNum) {
+        List<Integer> columns = new ArrayList<>();
+        for (String columnStr : splitLine) {
+            if (filters.contains(columnStr)) {
+                columns.add(columnNum);
+            }
+            columnNum++;
+        }
+        return columns;
+    }
+
 
     private void validateParameters(String inPathStr, String outPathStr) {
         pathIn = Path.of(inPathStr);
