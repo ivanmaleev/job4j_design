@@ -118,11 +118,9 @@ public class Car {
         JSONArray driversJson = new JSONArray(drivers);
         Engine engine = new Engine(120);
         Car car = new Car("LADA", "Vesta", drivers, 180, new Engine(120));
-        engine.setCar(car);
         JSONObject carJson = new JSONObject(car);
         JSONObject engineJson = new JSONObject(engine);
         engineJson.put("hP", engine.gethP());
-        engineJson.put("car", engineJson);
         carJson.put("produser", car.getProduser());
         carJson.put("model", car.getModel());
         carJson.put("drivers", driversJson);
