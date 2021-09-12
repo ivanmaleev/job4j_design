@@ -78,37 +78,37 @@ public class Car {
 
 
     public static void main(String[] args) throws JAXBException {
-//        String[] drivers = new String[3];
-//        drivers[0] = "Ivan";
-//        drivers[1] = "Anton";
-//        drivers[2] = "Valeriy";
-//        Car car = new Car("LADA", "Vesta", drivers, 180, new Car.Engine(120));
+/*        String[] drivers = new String[3];
+        drivers[0] = "Ivan";
+        drivers[1] = "Anton";
+        drivers[2] = "Valeriy";
+        Car car = new Car("LADA", "Vesta", drivers, 180, new Car.Engine(120));
 
         //json Gson
-//        final Gson gson = new GsonBuilder().create();
-//        String carJson = gson.toJson(car);
-//        System.out.println(carJson);
-//
-//        Car carFromJson = gson.fromJson(carJson, Car.class);
-//        System.out.println(carFromJson);
+        final Gson gson = new GsonBuilder().create();
+        String carJson = gson.toJson(car);
+        System.out.println(carJson);
+
+        Car carFromJson = gson.fromJson(carJson, Car.class);
+        System.out.println(carFromJson);
 
         //xml
-//        JAXBContext context = JAXBContext.newInstance(Car.class);
-//        Marshaller marshaller = context.createMarshaller();
-//        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-//        String xml = "";
-//        try (StringWriter writer = new StringWriter()) {
-//            marshaller.marshal(car, writer);
-//            xml = writer.getBuffer().toString();
-//            System.out.println(xml);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Unmarshaller unmarshaller = context.createUnmarshaller();
-//        try (StringReader reader = new StringReader(xml)) {
-//            Car result = (Car) unmarshaller.unmarshal(reader);
-//            System.out.println(result);
-//        }
+        JAXBContext context = JAXBContext.newInstance(Car.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        String xml = "";
+        try (StringWriter writer = new StringWriter()) {
+            marshaller.marshal(car, writer);
+            xml = writer.getBuffer().toString();
+            System.out.println(xml);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try (StringReader reader = new StringReader(xml)) {
+            Car result = (Car) unmarshaller.unmarshal(reader);
+            System.out.println(result);
+        }*/
 
         //org.json
         String[] drivers = new String[3];
