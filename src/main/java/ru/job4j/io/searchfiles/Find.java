@@ -2,6 +2,7 @@ package ru.job4j.io.searchfiles;
 
 import ru.job4j.io.ArgsName;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,7 +41,10 @@ public class Find {
         }
         SearchFiles searcher = new SearchFiles(n, type);
         Files.walkFileTree(pathIn, searcher);
-        Set<Path> files = searcher.getFiles();
+        saveLog(log, searcher.getFiles());
+    }
+
+    private static void saveLog(String log, Set<Path> files) throws FileNotFoundException {
         try (PrintWriter out = new PrintWriter(new FileOutputStream(log))) {
             for (Path file : files) {
                 out.println(file.toAbsolutePath());
