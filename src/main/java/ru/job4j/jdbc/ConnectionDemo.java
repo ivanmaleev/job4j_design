@@ -2,7 +2,6 @@ package ru.job4j.jdbc;
 
 import ru.job4j.io.Config;
 
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -17,9 +16,11 @@ public class ConnectionDemo {
         String login = config.value("login");
         String password = config.value("password");
         try (Connection connection = DriverManager.getConnection(url, login, password)) {
-            DatabaseMetaData metaData = connection.getMetaData();
-            System.out.println(metaData.getUserName());
-            System.out.println(metaData.getURL());
+//            DatabaseMetaData metaData = connection.getMetaData();
+//            System.out.println(metaData.getUserName());
+//            System.out.println(metaData.getURL());
+            String query = TableEditor.getTableScheme(connection, "car");
+            System.out.println(query);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
