@@ -10,7 +10,7 @@ public class ConfigTest {
 
     @Test
     public void whenPairWithoutComment() {
-        String path = "./app.properties";
+        String path = "./app.properties4";
         Config config = new Config(path);
         config.load();
         assertThat(config.value("hibernate.connection.username"), is("postgres"));
