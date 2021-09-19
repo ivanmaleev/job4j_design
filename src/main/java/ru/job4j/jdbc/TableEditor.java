@@ -19,7 +19,7 @@ public class TableEditor implements AutoCloseable {
         initConnection();
     }
 
-    private void initConnection() throws ClassNotFoundException, SQLException {
+    public void initConnection() throws ClassNotFoundException, SQLException {
         Config config = new Config("app.properties");
         config.load();
         Class.forName("org.postgresql.Driver");
@@ -122,7 +122,7 @@ public class TableEditor implements AutoCloseable {
             //tableEditor.dropTable("test_table");
             tableEditor.addColumn("test_table", "name", "varchar(255)");
             //tableEditor.dropColumn("test_table", "name");
-            tableEditor.renameColumn("test_table", "name", "name1");
+            //tableEditor.renameColumn("test_table", "name", "name1");
         } catch (Exception e) {
             e.printStackTrace();
         }
