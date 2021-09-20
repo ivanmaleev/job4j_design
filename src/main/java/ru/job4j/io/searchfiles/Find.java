@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,7 +40,8 @@ public class Find {
         if ("".equals(n)) {
             throw new IllegalArgumentException(type + "wrong filename, mask or regex");
         }
-        SearchFiles searcher = new SearchFiles(n, type);
+        final Predicate<Path> pred = searchPredicate(type, n);
+        SearchFiles searcher = new SearchFiles(n, type, pred);
         Files.walkFileTree(pathIn, searcher);
         saveLog(log, searcher.getFiles());
     }
@@ -51,6 +53,30 @@ public class Find {
             }
         }
     }
+
+    private static Predicate<Path> searchPredicate(String type, String n) {
+        final Predicate<Path> pred;
+        final String regexp;
+        if (type.equals("name")) {
+            regexp = n;
+            pred = (path) -> path.getFileName().toString().equals(regexp);
+        } else {
+            if (type.equals("mask")) {
+                n = n.replaceAll("[*]{1}", "[a-zA-Z_0-9]{0,}");
+                n = n.replaceAll("[\\.]{1}", "\\\\.");
+                n = n.replaceAll("\\?", "[0-9]{1}");
+                regexp = n;
+            } else {
+                regexp = n;
+            }
+            pred = (path) -> {
+                Pattern p = Pattern.compile(regexp);
+                Matcher matcher = p.matcher(path.getFileName().toString());
+                return matcher.matches();
+            };
+        }
+        return pred;
+    }
 }
 
 class SearchFiles extends SimpleFileVisitor<Path> {
@@ -58,31 +84,23 @@ class SearchFiles extends SimpleFileVisitor<Path> {
     final private String n;
     final private String type;
     final private Set<Path> files = new HashSet<>();
+    final private Predicate<Path> pred;
 
     public Set<Path> getFiles() {
         return files;
     }
 
-    public SearchFiles(String n, String type) {
+    public SearchFiles(String n, String type, Predicate<Path> pred) {
         this.n = n;
         this.type = type;
+        this.pred = pred;
     }
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        String fileName = file.getFileName().toString();
-        if (type.equals("name") && fileName.equals(n)) {
-            files.add(file);
-        } else if (type.equals("regex")) {
-            Pattern p = Pattern.compile(n);
-            Matcher matcher = p.matcher(fileName);
-            if (matcher.matches()) {
-                files.add(file);
-            }
-        } else if (fileName.contains(n)) {
+        if (pred.test(file)) {
             files.add(file);
         }
         return super.visitFile(file, attrs);
     }
-
 }
