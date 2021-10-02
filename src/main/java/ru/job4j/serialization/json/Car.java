@@ -1,8 +1,5 @@
 package ru.job4j.serialization.json;
 
-//import com.google.gson.Gson;
-//import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -84,7 +81,6 @@ public class Car {
         drivers[2] = "Valeriy";
         Car car = new Car("LADA", "Vesta", drivers, 180, new Car.Engine(120));
 
-        //json Gson
         final Gson gson = new GsonBuilder().create();
         String carJson = gson.toJson(car);
         System.out.println(carJson);
@@ -92,7 +88,6 @@ public class Car {
         Car carFromJson = gson.fromJson(carJson, Car.class);
         System.out.println(carFromJson);
 
-        //xml
         JAXBContext context = JAXBContext.newInstance(Car.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -110,7 +105,6 @@ public class Car {
             System.out.println(result);
         }*/
 
-        //org.json
         String[] drivers = new String[3];
         drivers[0] = "Ivan";
         drivers[1] = "Anton";

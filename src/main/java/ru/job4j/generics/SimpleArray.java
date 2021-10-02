@@ -60,22 +60,22 @@ public class SimpleArray<T> implements Iterable<T> {
 
     public static void main(String[] args) {
         SimpleArray<Integer> arr = new SimpleArray<>(6);
-        arr.add(5); //0
-        arr.add(4); //1
-        arr.add(3); //2
-        arr.add(2); //3
-        arr.add(1); //4
+        arr.add(5);
+        arr.add(4);
+        arr.add(3);
+        arr.add(2);
+        arr.add(1);
 
-        arr.set(2, 7);  //5, 4, 7, 2, 1
-        arr.set(4, 8);  //5, 4, 7, 2, 8
+        arr.set(2, 7);
+        arr.set(4, 8);
 
-        arr.add(10); //5, 4, 7, 2, 8, 10
-        arr.remove(1); //5, 7, 2, 8, 10
+        arr.add(10);
+        arr.remove(1);
 
-        arr.add(11); //5, 7, 2, 8, 10, 11
-        arr.remove(3); //5, 7, 2, 10, 11
+        arr.add(11);
+        arr.remove(3);
 
-        arr.add(9); //5, 7, 2, 10, 11, 9
+        arr.add(9);
 
         for (Integer ints : arr) {
             System.out.println(ints);
