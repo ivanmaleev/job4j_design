@@ -41,16 +41,18 @@ public class ReportEngineTest {
         Report engine = new ReportEngine(store);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Salary; ")
-                .append("\r<br>")
+                .append(System.lineSeparator())
                 .append(worker.getName()).append(";")
                 .append(worker.getSalary()).append(";")
-                .append("\r<br>")
+                .append(System.lineSeparator())
                 .append(worker2.getName()).append(";")
                 .append(worker2.getSalary()).append(";")
-                .append("\r<br>");
+                .append(System.lineSeparator());
+        String str = expect.toString();
+        str = str.replace("\n", "<br>");
         Comparator<Employee<? extends Number>> comparator = (a, b) -> b.getSalary().compareTo(a.getSalary());
         String format = "html";
         List<String> columns = List.of("Name", "Salary");
-        assertThat(engine.generate(em -> true, comparator, format, columns), is(expect.toString()));
+        assertThat(engine.generate(em -> true, comparator, format, columns), is(str));
     }
 }
