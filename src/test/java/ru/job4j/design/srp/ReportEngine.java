@@ -47,6 +47,8 @@ public class ReportEngine implements Report {
                 return text.toString();
             case "html":
                 return txtToHTML(text.toString());
+            default:
+                break;
         }
         return null;
     }

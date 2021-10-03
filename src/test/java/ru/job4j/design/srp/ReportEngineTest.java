@@ -27,8 +27,7 @@ public class ReportEngineTest {
         Comparator<Employee<? extends Number>> comparator = Comparator.comparing(Employee::getName);
         String format = "text";
         List<String> columns = List.of("Name", "Hired", "Fired", "Salary");
-        assertThat(engine.generate(em -> true, comparator, format, columns), is(expect.toString()))
-        ;
+        assertThat(engine.generate(em -> true, comparator, format, columns), is(expect.toString()));
     }
 
     @Test
