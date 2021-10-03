@@ -2,7 +2,7 @@ package ru.job4j.ood.srp;
 
 public class OrderProcessor {
 
-    public void process(Order order){
+    public void process(Order order) {
         /*process order*/
     }
 
