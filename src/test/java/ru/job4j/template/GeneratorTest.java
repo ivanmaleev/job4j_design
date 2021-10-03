@@ -1,8 +1,6 @@
 package ru.job4j.template;
 
 import org.junit.Test;
-import ru.job4j.kiss.MaxMin;
-import ru.job4j.tdd.Ticket3D;
 
 import java.util.HashMap;
 import java.util.Map;
