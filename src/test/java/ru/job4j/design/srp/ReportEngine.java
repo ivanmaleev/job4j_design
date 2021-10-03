@@ -13,8 +13,9 @@ public class ReportEngine implements Report {
     }
 
     @Override
-    public String generate(Predicate<Employee<? extends Number>> filter
-            , Comparator<Employee<? extends Number>> comparator, String format, List<String> columns) {
+    public String generate(Predicate<Employee<? extends Number>> filter,
+                           Comparator<Employee<? extends Number>> comparator,
+                           String format, List<String> columns) {
         StringBuilder text = new StringBuilder();
         for (String column : columns) {
             text.append(column).append("; ");
