@@ -1,7 +1,5 @@
 package ru.job4j.design.srp;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.function.Predicate;
 
 public class ReportEngine implements Report {
@@ -13,44 +11,17 @@ public class ReportEngine implements Report {
     }
 
     @Override
-    public String generate(Predicate<Employee<? extends Number>> filter,
-                           Comparator<Employee<? extends Number>> comparator,
-                           String format, List<String> columns) {
+    public String generate(Predicate<Employee<? extends Number>> filter) {
         StringBuilder text = new StringBuilder();
-        for (String column : columns) {
-            text.append(column).append("; ");
-        }
-        text.append(System.lineSeparator());
+        text.append("Name; Hired; Fired; Salary;").append(System.lineSeparator());
         for (Employee<? extends Number> employee : store.findBy(filter)) {
-            for (String column : columns) {
-                switch (column) {
-                    case "Name":
-                        text.append(employee.getName()).append(";");
-                        break;
-                    case "Hired":
-                        text.append(employee.getHired()).append(";");
-                        break;
-                    case "Fired":
-                        text.append(employee.getFired()).append(";");
-                        break;
-                    case "Salary":
-                        text.append(employee.getSalary()).append(";");
-                        break;
-                    default:
-                        break;
-                }
-            }
-            text.append(System.lineSeparator());
+            text.append(employee.getName()).append(";")
+                    .append(employee.getHired()).append(";")
+                    .append(employee.getFired()).append(";")
+                    .append(employee.getSalary()).append(";")
+                    .append(System.lineSeparator());
         }
-        switch (format) {
-            case "text":
-                return text.toString();
-            case "html":
-                return txtToHTML(text.toString());
-            default:
-                break;
-        }
-        return null;
+        return txtToHTML(text.toString());
     }
 
     private String txtToHTML(String s) {
