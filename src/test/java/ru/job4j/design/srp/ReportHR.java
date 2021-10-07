@@ -13,14 +13,14 @@ public class ReportHR implements Report {
     }
 
     @Override
-    public String generate(Predicate<Employee<? extends Number>> filter) {
+    public String generate(Predicate<Employee> filter) {
         StringBuilder text = new StringBuilder();
         text.append("Name; Salary;").append(System.lineSeparator());
-        List<Employee<? extends Number>> employees = store.findBy(filter)
+        List<Employee> employees = store.findBy(filter)
                 .stream()
-                .sorted((a, b) -> b.getSalary().compareTo(a.getSalary()))
+                .sorted((a, b) -> Double.compare(b.getSalary(), a.getSalary()))
                 .collect(Collectors.toList());
-        for (Employee<? extends Number> employee : employees) {
+        for (Employee employee : employees) {
             text.append(employee.getName()).append(";")
                     .append(employee.getSalary()).append(";")
                     .append(System.lineSeparator());

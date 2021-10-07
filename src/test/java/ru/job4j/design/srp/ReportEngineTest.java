@@ -13,7 +13,7 @@ public class ReportEngineTest {
     public void whenProgGenerated() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
-        Employee<Integer> worker = new Employee<>("Ivan", now, now, 100);
+        Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
         Report engine = new ReportEngine(store);
         StringBuilder expect = new StringBuilder()
@@ -34,7 +34,7 @@ public class ReportEngineTest {
     public void whenBuhGenerated() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
-        Employee<Double> worker = new Employee<>("Ivan", now, now, 100d);
+        Employee worker = new Employee("Ivan", now, now, 100d);
         store.add(worker);
         Report engine = new ReportBuh(store);
         StringBuilder expect = new StringBuilder()
@@ -43,7 +43,7 @@ public class ReportEngineTest {
                 .append(worker.getName()).append(";")
                 .append(worker.getHired()).append(";")
                 .append(worker.getFired()).append(";")
-                .append(worker.getSalary()).append(";")
+                .append(worker.getSalary()).append("$").append(";")
                 .append(System.lineSeparator());
         String str = expect.toString();
         assertThat(engine.generate(em -> true), is(str));
@@ -53,8 +53,8 @@ public class ReportEngineTest {
     public void whenHRGenerated() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
-        Employee<Integer> worker = new Employee<>("Ivan", now, now, 100);
-        Employee<Integer> worker2 = new Employee<>("Anton", now, now, 200);
+        Employee worker = new Employee("Ivan", now, now, 100);
+        Employee worker2 = new Employee("Anton", now, now, 200);
         store.add(worker);
         store.add(worker2);
         Report engine = new ReportHR(store);

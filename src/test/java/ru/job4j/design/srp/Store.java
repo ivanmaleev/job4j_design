@@ -5,5 +5,5 @@ import java.util.function.Predicate;
 
 public interface Store {
 
-    List<Employee<? extends Number>> findBy(Predicate<Employee<? extends Number>> filter);
+    List<Employee> findBy(Predicate<Employee> filter);
 }

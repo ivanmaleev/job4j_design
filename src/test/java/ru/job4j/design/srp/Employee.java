@@ -4,13 +4,13 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class Employee<T extends Number & Comparable> implements Comparator<Employee<T>> {
+public class Employee {
     private String name;
     private Calendar hired;
     private Calendar fired;
-    private T salary;
+    private double salary;
 
-    public Employee(String name, Calendar hired, Calendar fired, T salary) {
+    public Employee(String name, Calendar hired, Calendar fired, double salary) {
         this.name = name;
         this.hired = hired;
         this.fired = fired;
@@ -41,17 +41,12 @@ public class Employee<T extends Number & Comparable> implements Comparator<Emplo
         this.fired = fired;
     }
 
-    public T getSalary() {
+    public double getSalary() {
         return salary;
     }
 
-    public void setSalary(T salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
-    }
-
-    @Override
-    public int compare(Employee o1, Employee o2) {
-        return o1.name.compareTo(o2.name);
     }
 
     @Override
