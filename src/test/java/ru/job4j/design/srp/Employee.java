@@ -1,13 +1,16 @@
 package ru.job4j.design.srp;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Objects;
 
 public class Employee {
+    @Expose
     private String name;
     private Calendar hired;
     private Calendar fired;
+    @Expose
     private double salary;
 
     public Employee(String name, Calendar hired, Calendar fired, double salary) {

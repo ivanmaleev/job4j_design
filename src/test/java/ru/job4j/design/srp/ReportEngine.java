@@ -1,5 +1,13 @@
 package ru.job4j.design.srp;
 
+import com.google.gson.GsonBuilder;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Calendar;
 import java.util.function.Predicate;
 
 public class ReportEngine implements Report {
@@ -22,6 +30,54 @@ public class ReportEngine implements Report {
                     .append(System.lineSeparator());
         }
         return txtToHTML(text.toString());
+    }
+
+    @Override
+    public String generateXML(Predicate<Employee> filter) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(Employees.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        String xml = "";
+        try (StringWriter writer = new StringWriter()) {
+            marshaller.marshal(new Employees(store.findBy(filter)), writer);
+            xml = writer.getBuffer().toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return xml;
+    }
+
+    @Override
+    public String generateJSON(Predicate<Employee> filter) {
+        var users = store.findBy(filter);
+        var lib = new GsonBuilder().create();
+        return lib.toJson(users);
+    }
+
+    public static void main(String[] args) throws JAXBException {
+/*        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker = new Employee("Ivan", now, now, 100);
+        store.add(worker);
+        ReportEngine engine = new ReportEngine(store);
+        *//*final String s = engine.generateJSON(em -> true);*//*
+        final String s = engine.generateXML(em -> true);
+        System.out.println(s);*/
+/*        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker = new Employee("Ivan", now, now, 100);
+        store.add(worker);
+        ReportHR engine = new ReportHR(store);
+        *//*final String s = engine.generateJSON(em -> true);*//*
+        final String s = engine.generateXML(em -> true);
+        System.out.println(s);*/
+/*        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker = new Employee("Ivan", now, now, 100);
+        store.add(worker);
+        ReportBuh engine = new ReportBuh(store);
+        final String s = engine.generateJSON(em -> true);
+        System.out.println(s);*/
     }
 
     private String txtToHTML(String s) {
