@@ -54,32 +54,6 @@ public class ReportEngine implements Report {
         return lib.toJson(users);
     }
 
-    public static void main(String[] args) throws JAXBException {
-/*        MemStore store = new MemStore();
-        Calendar now = Calendar.getInstance();
-        Employee worker = new Employee("Ivan", now, now, 100);
-        store.add(worker);
-        ReportEngine engine = new ReportEngine(store);
-        *//*final String s = engine.generateJSON(em -> true);*//*
-        final String s = engine.generateXML(em -> true);
-        System.out.println(s);*/
-/*        MemStore store = new MemStore();
-        Calendar now = Calendar.getInstance();
-        Employee worker = new Employee("Ivan", now, now, 100);
-        store.add(worker);
-        ReportHR engine = new ReportHR(store);
-        *//*final String s = engine.generateJSON(em -> true);*//*
-        final String s = engine.generateXML(em -> true);
-        System.out.println(s);*/
-/*        MemStore store = new MemStore();
-        Calendar now = Calendar.getInstance();
-        Employee worker = new Employee("Ivan", now, now, 100);
-        store.add(worker);
-        ReportBuh engine = new ReportBuh(store);
-        final String s = engine.generateJSON(em -> true);
-        System.out.println(s);*/
-    }
-
     private String txtToHTML(String s) {
         StringBuilder builder = new StringBuilder();
         boolean previousWasASpace = false;
