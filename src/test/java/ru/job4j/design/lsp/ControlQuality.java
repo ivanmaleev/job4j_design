@@ -10,8 +10,8 @@ public class ControlQuality {
 
     public static int calcExpirationDate(Food food) throws IllegalArgumentException {
         long holeTime = food.getExpiryDate().getTimeInMillis() - food.getCreateDate().getTimeInMillis();
-        long retainedTime = food.getExpiryDate().getTimeInMillis() -
-                Math.min(food.getExpiryDate().getTimeInMillis(), Calendar.getInstance().getTimeInMillis());
+        long retainedTime = food.getExpiryDate().getTimeInMillis()
+                - Math.min(food.getExpiryDate().getTimeInMillis(), Calendar.getInstance().getTimeInMillis());
         if (holeTime < 0 || retainedTime < 0
                 || holeTime - retainedTime < 0) {
             throw new IllegalArgumentException("Wrong dates");
