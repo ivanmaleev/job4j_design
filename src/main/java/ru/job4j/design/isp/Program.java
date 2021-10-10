@@ -3,6 +3,13 @@ package ru.job4j.design.isp;
 import java.util.List;
 
 public class Program {
+
+    private MenuElement root;
+
+    public Program(MenuElement root) {
+        this.root = root;
+    }
+
     public static void main(String[] args) {
         MenuElement elementJobRoot = new ElementJob("Корень меню");
         MenuElement elementJob1 = new ElementJob("Задача 1");
@@ -14,6 +21,8 @@ public class Program {
         Action action = new SimpleAction();
         elementJob111.setAction(action);
 
+        Program program = new Program(elementJobRoot);
+
         List<MenuElement> elementJobRootList = List.of(elementJob1);
         elementJobRoot.setChildrens(elementJobRootList);
         List<MenuElement> elementJob1List = List.of(elementJob11, elementJob12);
@@ -21,7 +30,7 @@ public class Program {
         List<MenuElement> elementJob11List = List.of(elementJob111, elementJob112);
         elementJob11.setChildrens(elementJob11List);
         printMenu(elementJobRoot);
-        doActionByName(elementJobRoot, "Задача 1.1.1");
+        program.doAction("Задача 1.1.1");
     }
 
     public static void printMenu(MenuElement root) {
@@ -30,16 +39,23 @@ public class Program {
                 .forEach(Program::printMenu);
     }
 
-    public static boolean doActionByName(MenuElement root, String name) {
+    public static MenuElement select(MenuElement root, String name) {
         if (root.getName().equals(name)) {
-            root.getAction().doAction();
-            return true;
+            return root;
         }
         for (MenuElement child : root.getChildrens()) {
-            if (doActionByName(child, name)) {
-                return true;
+            MenuElement select = select(child, name);
+            if (select != null) {
+                return select;
             }
         }
-        return false;
+        return null;
+    }
+
+    public void doAction(String name) {
+        MenuElement select = select(this.root, name);
+        if (select != null) {
+            select.getAction().doAction();
+        }
     }
 }
