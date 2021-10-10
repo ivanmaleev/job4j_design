@@ -7,8 +7,8 @@ public abstract class FoodStore {
 
     protected List<Food> foodList = new ArrayList<>();
 
-    public void addFood(Food food) {
-        foodList.add(food);
+    public boolean addFood(Food food) {
+        return foodList.add(food);
     }
 
     private void removeFood(Food food) {

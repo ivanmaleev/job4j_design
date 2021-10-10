@@ -7,6 +7,11 @@ import java.util.List;
 
 public class ControlQuality {
 
+    List<FoodStore> foodStoreList;
+
+    public ControlQuality(List<FoodStore> foodStoreList) {
+        this.foodStoreList = foodStoreList;
+    }
 
     public static int calcExpirationDate(Food food) throws IllegalArgumentException {
         long holeTime = food.getExpiryDate().getTimeInMillis() - food.getCreateDate().getTimeInMillis();
@@ -36,10 +41,12 @@ public class ControlQuality {
         foodList.add(milk);
 
         List<FoodStore> foodStoreList = List.of(new Warehouse(), new Shop(), new Trash());
+        ControlQuality controlQuality = new ControlQuality(foodStoreList);
+    }
+
+    public void sortFood(List<Food> foodList) {
         foodStoreList.stream().forEach(foodStore -> foodList
                 .stream()
                 .forEach(foodStore::addFood));
-        System.out.println(foodStoreList);
     }
-
 }
