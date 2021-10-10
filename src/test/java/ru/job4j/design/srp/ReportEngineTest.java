@@ -1,11 +1,10 @@
 package ru.job4j.design.srp;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.is;
-
+import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.Calendar;
 
 public class ReportEngineTest {
 
@@ -27,7 +26,7 @@ public class ReportEngineTest {
         String str = expect.toString();
         str = str.replace("\n", "<br>");
         str = str.replace("\"", "&quot;");
-        assertThat(engine.generate(em -> true), is(str));
+        Assert.assertThat(engine.generate(em -> true), Matchers.is(str));
     }
 
     @Test
@@ -46,7 +45,7 @@ public class ReportEngineTest {
                 .append(worker.getSalary()).append("$").append(";")
                 .append(System.lineSeparator());
         String str = expect.toString();
-        assertThat(engine.generate(em -> true), is(str));
+        Assert.assertThat(engine.generate(em -> true), Matchers.is(str));
     }
 
     @Test
@@ -68,7 +67,8 @@ public class ReportEngineTest {
                 .append(worker.getSalary()).append(";")
                 .append(System.lineSeparator());
         String str = expect.toString();
-        assertThat(engine.generate(em -> true), is(str));
+        Assert.assertThat(engine.generate(em -> true), Matchers.is(str));
     }
+
 
 }
