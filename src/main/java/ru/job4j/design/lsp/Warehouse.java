@@ -4,7 +4,7 @@ public class Warehouse extends FoodStore {
 
     @Override
     public boolean addFood(Food food) {
-        if (ControlQuality.calcExpirationDate(food) <= 25) {
+        if (FoodDate.calcExpirationDate(food) <= 25) {
             return super.addFood(food);
         }
         return false;
