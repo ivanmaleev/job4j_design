@@ -1,5 +1,6 @@
 package ru.job4j.design.lsp;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public abstract class Food {
@@ -55,5 +56,17 @@ public abstract class Food {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat format = new SimpleDateFormat(
+                "dd.MM.yyyy");
+        return "Food{"
+                + "name='" + name + '\''
+                + ", expiryDate=" + format.format(expiryDate.getTime())
+                + ", createDate=" + format.format(createDate.getTime())
+                + ", price=" + price
+                + '}';
     }
 }

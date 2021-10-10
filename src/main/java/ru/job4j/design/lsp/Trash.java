@@ -9,4 +9,9 @@ public class Trash extends FoodStore {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Trash";
+    }
 }

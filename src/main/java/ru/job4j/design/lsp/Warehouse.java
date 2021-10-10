@@ -9,4 +9,9 @@ public class Warehouse extends FoodStore {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Warehouse";
+    }
 }

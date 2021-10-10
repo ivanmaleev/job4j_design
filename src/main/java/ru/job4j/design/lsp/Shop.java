@@ -15,4 +15,8 @@ public class Shop extends FoodStore {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "Shop";
+    }
 }
