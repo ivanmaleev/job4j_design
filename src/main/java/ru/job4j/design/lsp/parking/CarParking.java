@@ -1,23 +1,31 @@
 package ru.job4j.design.lsp.parking;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CarParking implements Parking {
 
-    private int numberOfParkingSpaces;
+    private final int numberOfParkingSpaces;
     private int size;
-    List<Automobile> automobileList = new ArrayList<>();
+    Automobile[] carList;
+    Automobile[] truckList;
+    private int pointCar;
+    private int pointTruck;
 
     public CarParking(int numberOfParkingSpaces) {
         this.numberOfParkingSpaces = numberOfParkingSpaces;
+        this.carList = new Automobile[numberOfParkingSpaces];
+        this.truckList = new Automobile[numberOfParkingSpaces];
     }
 
     @Override
     public boolean parkAuto(Automobile automobile) {
         int sizeOfAutomobile = automobile.getSize();
         if (numberOfParkingSpaces >= size + sizeOfAutomobile) {
-            automobileList.add(automobile);
+            if (sizeOfAutomobile == 1) {
+                carList[pointCar] = automobile;
+                pointCar++;
+            } else {
+                truckList[pointTruck] = automobile;
+                pointTruck++;
+            }
             size += sizeOfAutomobile;
             return true;
         }
