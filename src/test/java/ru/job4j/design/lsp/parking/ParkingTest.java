@@ -7,7 +7,7 @@ public class ParkingTest {
 
     @Test
     public void whenParkCar() {
-        Automobile truck = new Truck();
+        Automobile truck = new Truck(2);
         Parking parking = new CarParking();
         Assert.assertTrue(parking.parkAuto(truck));
     }
