@@ -7,9 +7,7 @@ public abstract class MenuElement {
 
     String name;
     List<MenuElement> childrens = new ArrayList<>();
-
-    void action() {
-    }
+    Action action;
 
     public void setChildrens(List<MenuElement> childrens) {
         this.childrens = childrens;
@@ -21,5 +19,13 @@ public abstract class MenuElement {
 
     public String getName() {
         return name;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
+    }
+
+    public Action getAction() {
+        return action;
     }
 }

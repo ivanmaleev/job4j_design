@@ -4,11 +4,6 @@ import java.util.List;
 
 public class ToolbarMenu extends MenuElement {
 
-    @Override
-    void action() {
-        System.out.println("toolbar menu open...");
-    }
-
     public ToolbarMenu(String name) {
         this.name = name;
     }

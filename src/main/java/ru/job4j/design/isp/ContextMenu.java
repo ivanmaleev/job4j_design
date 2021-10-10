@@ -4,11 +4,6 @@ import java.util.List;
 
 public class ContextMenu extends MenuElement {
 
-    @Override
-    void action() {
-        System.out.println("context menu open...");
-    }
-
     public ContextMenu(String name) {
         this.name = name;
     }
