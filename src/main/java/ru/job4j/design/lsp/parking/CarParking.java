@@ -6,6 +6,8 @@ public class CarParking implements Parking {
     Automobile[] truckSpacesList;
     private int pointCar;
     private int pointTruck;
+    private int carCounter;
+    private int truckCounter;
 
     public CarParking(int numberOfTruckSpaces, int numberOfCarSpaces) {
         this.truckSpacesList = new Automobile[numberOfTruckSpaces];
@@ -19,10 +21,20 @@ public class CarParking implements Parking {
                 && (pointTruck + 1) <= truckSpacesList.length) {
             truckSpacesList[pointTruck] = automobile;
             pointTruck++;
+            truckCounter++;
             return true;
         } else if ((pointCar + sizeOfAutomobile) <= carSpacesList.length) {
-            carSpacesList[pointCar] = automobile;
-            pointCar++;
+            if (sizeOfAutomobile == 1) {
+                carSpacesList[pointCar] = automobile;
+                carCounter++;
+                pointCar++;
+            } else {
+                for (int i = 0; i < sizeOfAutomobile; i++) {
+                    carSpacesList[pointCar] = automobile;
+                    pointCar++;
+                }
+                truckCounter++;
+            }
             return true;
         }
         return false;
