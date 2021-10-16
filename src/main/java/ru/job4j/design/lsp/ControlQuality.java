@@ -1,6 +1,7 @@
 package ru.job4j.design.lsp;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -32,6 +33,8 @@ public class ControlQuality {
         ControlQuality controlQuality = new ControlQuality(foodStoreList);
         controlQuality.sortFood(foodList);
         controlQuality.showStores();
+        controlQuality.resort();
+        controlQuality.showStores();
     }
 
     public void sortFood(List<Food> foodList) {
@@ -45,5 +48,15 @@ public class ControlQuality {
             System.out.println(foodStore);
             foodStore.foodList.forEach(System.out::println);
         }
+    }
+
+    public void resort() {
+        List<Food> foodList = new ArrayList<>();
+        for (FoodStore foodStore : foodStoreList) {
+            List<Food> storeFoodList = foodStore.getFoodList();
+            foodList.addAll(storeFoodList);
+            storeFoodList.clear();
+        }
+        sortFood(foodList);
     }
 }

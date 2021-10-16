@@ -14,4 +14,8 @@ public abstract class FoodStore {
     private void removeFood(Food food) {
         foodList.remove(food);
     }
+
+    public List<Food> getFoodList() {
+        return foodList;
+    }
 }
